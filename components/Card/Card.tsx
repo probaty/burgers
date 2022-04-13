@@ -68,7 +68,7 @@ const Card: FC<CardProps> = ({ imageUrl, title, rating, price }) => {
         <ButtonBrand dark onClick={() => {}}>
           <HStack>
             <Icon as={MdAddShoppingCart} fontSize="20"></Icon>
-            <Text>Добавить в корзину</Text>
+            <Text>+ Add to cart</Text>
           </HStack>
         </ButtonBrand>
       </VStack>

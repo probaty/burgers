@@ -23,7 +23,7 @@ const theme = extendTheme({
         price: {
           fontSize: 18,
           fontFamily: 'sans',
-          letterSpacing: 2,
+          letterSpacing: 1,
         },
       },
     },

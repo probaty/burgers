@@ -5,9 +5,12 @@ import theme from '../theme';
 import { firebaseConfig } from '../configs/firebase';
 import { initializeApp } from 'firebase/app';
 import Layout from '../components/layouts/Layout';
+import { getStorage } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
 
 const app = initializeApp(firebaseConfig);
-// const storage = getStorage(app);
+const storage = getStorage(app);
+const auth = getAuth(app);
 
 // export const Context = createContext({ storage });
 function MyApp({ Component, pageProps }: AppProps) {
