@@ -17,8 +17,13 @@ const theme = extendTheme({
         fontWeight: '400',
       },
       sizes: {
-        lg: {
-          fontSize: '24',
+        brand: {
+          fontSize: '22',
+        },
+        price: {
+          fontSize: 18,
+          fontFamily: 'sans',
+          letterSpacing: 2,
         },
       },
     },
