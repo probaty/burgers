@@ -5,23 +5,20 @@ import theme from '../theme';
 import { firebaseConfig } from '../configs/firebase';
 import { initializeApp } from 'firebase/app';
 import Layout from '../components/layouts/Layout';
-import { getStorage } from 'firebase/storage';
-import { getAuth } from 'firebase/auth';
-
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-const auth = getAuth(app);
+import { Provider } from 'react-redux';
+import { store } from '../store';
 
 // export const Context = createContext({ storage });
 function MyApp({ Component, pageProps }: AppProps) {
+  initializeApp(firebaseConfig);
   return (
-    <ChakraProvider theme={theme}>
-      {/* <Context.Provider value={{ storage }}> */}
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      {/* </Context.Provider> */}
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
+    </Provider>
   );
 }
 
