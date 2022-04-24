@@ -2,7 +2,7 @@ import { Box, Flex, HStack, Icon } from '@chakra-ui/react';
 import React, { FC, ReactChild, useState } from 'react';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
-const Rating: FC<{ rating: number }> = ({ rating }) => {
+const RatingActive: FC<{ rating: number }> = ({ rating }) => {
   const [hoverStars, setHoverStars] = useState<number | null>(null);
   const stars: ReactChild[] = [];
 
@@ -15,6 +15,7 @@ const Rating: FC<{ rating: number }> = ({ rating }) => {
     if (i <= currentStars) {
       stars.push(
         <Box
+          key={i}
           px={1}
           py={0}
           onMouseOver={() => handleHover(i)}
@@ -27,6 +28,7 @@ const Rating: FC<{ rating: number }> = ({ rating }) => {
     } else {
       stars.push(
         <Box
+          key={i}
           px={1}
           py={0}
           onMouseOver={() => handleHover(i)}
@@ -41,4 +43,4 @@ const Rating: FC<{ rating: number }> = ({ rating }) => {
   return <Flex>{stars}</Flex>;
 };
 
-export default Rating;
+export default RatingActive;

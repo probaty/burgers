@@ -27,6 +27,16 @@ const theme = extendTheme({
         },
       },
     },
+    Modal: {
+      variants: {
+        brand: {
+          dialog: {
+            bg: 'brandGray',
+            borderRadius: 0,
+          },
+        },
+      },
+    },
   },
   styles: {
     global: () => ({

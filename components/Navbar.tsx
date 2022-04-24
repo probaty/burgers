@@ -2,23 +2,33 @@ import {
   Box,
   Container,
   Flex,
-  Heading,
   HStack,
   Icon,
   IconButton,
   Link,
   Text,
   useBreakpointValue,
+  useDisclosure,
 } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import CartLink from './CartLink';
 import NextLink from 'next/link';
 import MobileMenu from './mobile/MobileMenu';
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import { useActions } from '../hooks/useActions';
+import AuthModal from './auth/AuthModal';
+import ProfileMenu from './ProfileMenu';
+import ProfileButton from './ProfileButton';
+import { useAuth } from '../hooks/useAuth';
 
 const Navbar: FC = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isAuth } = useAuth();
+
   const mobile = useBreakpointValue({ base: true, md: false });
   const cart = <CartLink count={2} />;
+
   return (
     <Box bg="#292d3688" pos="sticky" zIndex="sticky" h="12">
       <Container maxW="container.xl" h="full" px={{ base: 0, md: 4 }}>
@@ -28,13 +38,9 @@ const Navbar: FC = () => {
               Burgers
             </Link>
           </NextLink>
-          {mobile ? (
-            <Flex alignItems="center" gap="10px">
-              {cart}
-              <Text fontSize={12}>MENU</Text>
-              <MobileMenu />
-            </Flex>
-          ) : (
+          {!isAuth && <AuthModal isOpen={isOpen} onClose={onClose} />}
+
+          {!mobile ? (
             <>
               <HStack spacing={12}>
                 <NextLink href="/" passHref>
@@ -46,18 +52,15 @@ const Navbar: FC = () => {
               </HStack>
               <Flex>
                 {cart}
-                <IconButton
-                  bg={'brand'}
-                  h="12"
-                  w="12"
-                  aria-label="cart"
-                  color="background"
-                  borderRadius={0}
-                  _hover={{ bg: '#d9bc86' }}
-                  icon={<Icon w="6" h="6" as={CgProfile} />}
-                />
+                <ProfileButton onOpen={onOpen} />
               </Flex>
             </>
+          ) : (
+            <Flex alignItems="center" gap="10px">
+              {cart}
+              <Text fontSize={12}>MENU</Text>
+              <MobileMenu />
+            </Flex>
           )}
         </Flex>
       </Container>

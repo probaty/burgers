@@ -1,16 +1,16 @@
 import { Button } from '@chakra-ui/react';
 import React, { FC } from 'react';
 
-const ButtonBrand: FC<{ dark?: boolean; onClick: Function }> = ({
-  children,
-  onClick,
-  dark = false,
-  ...props
-}) => {
+const ButtonBrand: FC<{
+  dark?: boolean;
+  onClick: Function;
+  type?: 'button' | 'submit' | 'reset' | undefined;
+}> = ({ children, onClick, type = undefined, dark = false, ...props }) => {
   if (dark) {
     return (
       <Button
         {...props}
+        type={type}
         bg={'darkGray'}
         onClick={() => onClick()}
         borderRadius={0}
@@ -29,6 +29,7 @@ const ButtonBrand: FC<{ dark?: boolean; onClick: Function }> = ({
     <Button
       {...props}
       bg={'brand'}
+      type={type}
       onClick={() => onClick()}
       borderRadius={0}
       px={5}

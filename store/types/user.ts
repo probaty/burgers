@@ -3,7 +3,7 @@ import { UserModel } from './userModel';
 
 export interface UserState {
   user: null | UserModel;
-  error: null | string;
+  error: null | string | any;
   loading: boolean;
 }
 
@@ -12,7 +12,9 @@ export enum UserActionTypes {
   AUTH_PROGRESS = 'AUTH_PROGRESS',
   LOGOUT_USER = 'LOGOUT_USER',
   AUTH_EMAIL_USERS = 'AUTH_EMAIL_USERS',
+  // SING_IN_EMAIL_USERS = 'AUTH_EMAIL_USERS',
   AUTH_GOOGLE_USERS = 'AUTH_GOOGLE_USERS',
+  // SING_IN_GOOGLE_USERS = 'SING_IN_GOOGLE_USERS',
   AUTH_ERROR = 'AUTH_ERROR',
 }
 
@@ -37,7 +39,7 @@ interface AuthEmailUserAction {
 }
 interface AuthErrorAction {
   type: UserActionTypes.AUTH_ERROR;
-  payload: string;
+  payload: string | any;
 }
 
 export type UserActions =
