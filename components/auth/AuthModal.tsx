@@ -12,7 +12,9 @@ import {
   TabPanel,
   ModalHeader,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAuthLoading } from '../../hooks/useAuthLoading';
+import LoadingSpinner from './LoadingSpinner';
 import SingIn from './SingIn';
 import SingUp from './SingUp';
 
@@ -20,6 +22,7 @@ const AuthModal: React.FC<{ onClose: () => void; isOpen: boolean }> = ({
   isOpen,
   onClose,
 }) => {
+  const loading = useAuthLoading();
   return (
     <Modal isOpen={isOpen} onClose={onClose} variant="brand">
       <ModalOverlay />
@@ -32,6 +35,7 @@ const AuthModal: React.FC<{ onClose: () => void; isOpen: boolean }> = ({
         />
         <ModalHeader />
         <ModalBody>
+          {loading && <LoadingSpinner />}
           <Tabs isFitted>
             <TabList>
               <Tab _selected={{ color: 'brand', borderColor: 'brand' }}>

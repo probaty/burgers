@@ -24,10 +24,17 @@ import { useAuth } from '../hooks/useAuth';
 
 const Navbar: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isAuth } = useAuth();
+  const { isAuth, token, email } = useAuth();
+  console.log(email);
 
   const mobile = useBreakpointValue({ base: true, md: false });
   const cart = <CartLink count={2} />;
+
+  useEffect(() => {
+    if (isAuth) {
+      onClose();
+    }
+  }, [isAuth, onClose]);
 
   return (
     <Box bg="#292d3688" pos="sticky" zIndex="sticky" h="12">
@@ -38,7 +45,7 @@ const Navbar: FC = () => {
               Burgers
             </Link>
           </NextLink>
-          {!isAuth && <AuthModal isOpen={isOpen} onClose={onClose} />}
+          <AuthModal isOpen={isOpen} onClose={onClose} />
 
           {!mobile ? (
             <>

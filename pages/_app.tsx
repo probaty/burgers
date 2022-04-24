@@ -17,6 +17,7 @@ const GlobalStyles = css({
 
 function MyApp({ Component, pageProps }: AppProps) {
   initializeApp(firebaseConfig);
+
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>

@@ -1,31 +1,9 @@
-import {
-  Box,
-  Center,
-  Divider,
-  Flex,
-  FormControl,
-  FormLabel,
-  HStack,
-  Icon,
-  Input,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
-import { error } from 'console';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from 'firebase/auth';
-import React, { useEffect } from 'react';
+import { Divider, HStack, Icon, Input, Text, VStack } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineGoogle } from 'react-icons/ai';
-import { useDispatch } from 'react-redux';
-import { useActions } from '../../hooks/useActions';
-import { useAuth } from '../../hooks/useAuth';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { setUser } from '../../store/slices/userSlice';
+import { authUserEmail, authWithGoogle } from '../../helpers';
+import { useAuthLoadToggle } from '../../hooks/useAuthLoadToggle';
 import ButtonBrand from '../ButtonBrand';
 import ErrorBox from './ErrorBox';
 
@@ -36,60 +14,21 @@ interface FormInput {
 
 const SingIn: React.FC = () => {
   const { register, handleSubmit } = useForm<FormInput>();
-
-  const dispatch = useDispatch();
-  // const { authGoogleUser, authEmailUser } = useActions();
-  // const { error } = useTypedSelector((state) => state.user);
-  const { isAuth, token } = useAuth();
-  console.log(token);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [googleError, setGoogleError] = useState<string | null>(null);
+  const loading = useAuthLoadToggle();
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    authUserEmail(data.email, data.password);
-  };
-
-  const authUserEmail = (email: string, password: string) => {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then(async ({ user }) => {
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            isAnonymous: user.isAnonymous,
-            token: await user.getIdToken(),
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const authWithGoogle = () => {
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(({ user }) => {
-        console.log(user);
-
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            isAnonymous: user.isAnonymous,
-            token: null,
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    loading.on();
+    authUserEmail(data.email, data.password, setEmailError, loading.off);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack spacing={6} pt="6">
-        {/* {error && <ErrorBox>{error}</ErrorBox>} */}
+        {(emailError || googleError) && (
+          <ErrorBox>{emailError || googleError}</ErrorBox>
+        )}
         <Input
           type="email"
           variant="flushed"
@@ -112,7 +51,12 @@ const SingIn: React.FC = () => {
           <Text>OR</Text>
           <Divider />
         </HStack>
-        <ButtonBrand onClick={() => authWithGoogle()}>
+        <ButtonBrand
+          onClick={() => {
+            loading.on();
+            authWithGoogle(setGoogleError, loading.off);
+          }}
+        >
           <Icon as={AiOutlineGoogle} w="6" h="6" mr={3} />
           Sing in with Google
         </ButtonBrand>

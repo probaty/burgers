@@ -1,9 +1,11 @@
 import { useTypedSelector } from './useTypedSelector';
 
 export const useAuth = () => {
-  const user = useTypedSelector((state) => state.user);
+  const { email, id, isAnonymous } = useTypedSelector((state) => state.user);
   return {
-    ...user,
-    isAuth: !!user.email,
+    email,
+    id,
+    isAnonymous,
+    isAuth: !!email,
   };
 };

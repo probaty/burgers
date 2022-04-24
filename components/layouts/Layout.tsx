@@ -1,10 +1,31 @@
 import { Container } from '@chakra-ui/react';
-import React, { FC, useEffect } from 'react';
-import { useActions } from '../../hooks/useActions';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import React, { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { useAuthLoadToggle } from '../../hooks/useAuthLoadToggle';
+import { removeUser, setUser } from '../../store/slices/userSlice';
 import Navbar from '../Navbar';
 
 const Layout: FC = ({ children }) => {
+  const auth = getAuth();
+  const dispatch = useDispatch();
+  const loading = useAuthLoadToggle();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      dispatch(
+        setUser({
+          email: user.email,
+          id: user.uid,
+          isAnonymous: user.isAnonymous,
+        })
+      );
+      loading.off();
+    } else {
+      dispatch(removeUser());
+      loading.off();
+    }
+  });
   return (
     <>
       <Navbar />

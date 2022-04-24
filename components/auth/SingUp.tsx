@@ -1,8 +1,5 @@
 import {
   Divider,
-  Flex,
-  FormControl,
-  FormLabel,
   HStack,
   Icon,
   Input,
@@ -12,17 +9,29 @@ import {
   useBoolean,
   VStack,
 } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { BiCheck } from 'react-icons/bi';
 import { MdOutlineClose } from 'react-icons/md';
+import { authWithGoogle, registerUserEmail } from '../../helpers';
+import { useAuthLoadToggle } from '../../hooks/useAuthLoadToggle';
 import ButtonBrand from '../ButtonBrand';
+import ErrorBox from './ErrorBox';
+
+interface FormInput {
+  email: string;
+  password: string;
+  passwordConf: string;
+}
 
 const SingUp = () => {
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch } = useForm<FormInput>();
   const [focus, setFocus] = useBoolean();
   const [passwordConfirm, setPasswordConfirm] = useBoolean();
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [googleError, setGoogleError] = useState<string | null>(null);
+  const loading = useAuthLoadToggle();
 
   useEffect(() => {
     if (
@@ -35,9 +44,18 @@ const SingUp = () => {
     }
   }, [watch('passwordConf'), watch('password')]);
 
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    if (data.password !== data.passwordConf) return;
+    loading.on();
+    registerUserEmail(data.email, data.password, setEmailError, loading.off);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <VStack spacing={6} pt="6">
+        {(emailError || googleError) && (
+          <ErrorBox>{emailError || googleError}</ErrorBox>
+        )}
         <Input
           type="email"
           variant="flushed"
@@ -76,13 +94,20 @@ const SingUp = () => {
             )}
           </InputRightAddon>
         </InputGroup>
-        <ButtonBrand onClick={() => {}}>Sing up</ButtonBrand>
+        <ButtonBrand disabled={!passwordConfirm} type="submit">
+          Sing up
+        </ButtonBrand>
         <HStack w="full">
           <Divider />
           <Text>OR</Text>
           <Divider />
         </HStack>
-        <ButtonBrand onClick={() => {}}>
+        <ButtonBrand
+          onClick={() => {
+            loading.on();
+            authWithGoogle(setGoogleError, loading.off);
+          }}
+        >
           <Icon as={AiOutlineGoogle} w="6" h="6" mr={3} />
           Sing up with Google
         </ButtonBrand>

@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface UserState {
   email: null | string;
   isAnonymous: null | boolean;
-  token: null | string;
   id: null | string;
 }
 
@@ -11,7 +10,6 @@ const initialState: UserState = {
   email: null,
   id: null,
   isAnonymous: null,
-  token: null,
 };
 
 const userSlice = createSlice({
@@ -22,13 +20,11 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.id = action.payload.id;
       state.isAnonymous = action.payload.isAnonymous;
-      state.token = action.payload.token;
     },
     removeUser(state) {
       state.email = null;
       state.id = null;
       state.isAnonymous = null;
-      state.token = null;
     },
   },
 });

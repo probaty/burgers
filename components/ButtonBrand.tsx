@@ -3,16 +3,25 @@ import React, { FC } from 'react';
 
 const ButtonBrand: FC<{
   dark?: boolean;
-  onClick: Function;
+  onClick?: Function;
   type?: 'button' | 'submit' | 'reset' | undefined;
-}> = ({ children, onClick, type = undefined, dark = false, ...props }) => {
+  disabled?: boolean;
+}> = ({
+  children,
+  onClick,
+  type = undefined,
+  dark = false,
+  disabled,
+  ...props
+}) => {
   if (dark) {
     return (
       <Button
         {...props}
         type={type}
+        disabled={disabled}
         bg={'darkGray'}
-        onClick={() => onClick()}
+        onClick={onClick ? () => onClick() : undefined}
         borderRadius={0}
         px={5}
         fontSize={12}
@@ -30,7 +39,8 @@ const ButtonBrand: FC<{
       {...props}
       bg={'brand'}
       type={type}
-      onClick={() => onClick()}
+      disabled={disabled}
+      onClick={onClick ? () => onClick() : undefined}
       borderRadius={0}
       px={5}
       color="background"
