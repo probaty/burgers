@@ -2,7 +2,6 @@ import { Icon, IconButton } from '@chakra-ui/react';
 import React from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { useAuth } from '../hooks/useAuth';
-import { UserModel } from '../store/types/userModel';
 import ProfileMenu from './ProfileMenu';
 
 const ProfileButton: React.FC<{

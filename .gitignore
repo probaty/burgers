@@ -14,6 +14,7 @@
 
 # production
 /build
+pages/admin.tsx
 
 # misc
 .DS_Store

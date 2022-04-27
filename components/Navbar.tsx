@@ -3,32 +3,30 @@ import {
   Container,
   Flex,
   HStack,
-  Icon,
-  IconButton,
   Link,
   Text,
   useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { FC, useEffect } from 'react';
-import { CgProfile } from 'react-icons/cg';
 import CartLink from './CartLink';
 import NextLink from 'next/link';
-import MobileMenu from './mobile/MobileMenu';
-import { useTypedSelector } from '../hooks/useTypedSelector';
-import { useActions } from '../hooks/useActions';
-import AuthModal from './auth/AuthModal';
-import ProfileMenu from './ProfileMenu';
+
 import ProfileButton from './ProfileButton';
 import { useAuth } from '../hooks/useAuth';
+import dynamic from 'next/dynamic';
+import { useCart } from '../hooks/useCart';
+
+const AuthModal = dynamic(() => import('./auth/AuthModal'));
+const MobileMenu = dynamic(() => import('./mobile/MobileMenu'));
 
 const Navbar: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isAuth, token, email } = useAuth();
-  console.log(email);
+  const { isAuth } = useAuth();
+  const { totalCount } = useCart();
 
   const mobile = useBreakpointValue({ base: true, md: false });
-  const cart = <CartLink count={2} />;
+  const cart = <CartLink count={totalCount} />;
 
   useEffect(() => {
     if (isAuth) {

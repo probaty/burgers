@@ -1,15 +1,9 @@
 import { Heading, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import Card from '../components/Card/Card';
+import Card from '../components/Card';
 
 const Home: NextPage = () => {
-  return (
-    <div>
-      <Heading>jopa</Heading>
-      <Text>popa</Text>
-      <Card></Card>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Home;

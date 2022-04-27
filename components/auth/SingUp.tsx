@@ -68,7 +68,7 @@ const SingUp = () => {
           variant="flushed"
           placeholder="Password"
           focusBorderColor="brand"
-          {...register('password', { required: true })}
+          {...register('password', { required: true, minLength: 6 })}
         />
         <InputGroup>
           <Input

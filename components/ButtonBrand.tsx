@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 
 const ButtonBrand: FC<{
   dark?: boolean;
-  onClick?: Function;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
 }> = ({
@@ -21,7 +21,7 @@ const ButtonBrand: FC<{
         type={type}
         disabled={disabled}
         bg={'darkGray'}
-        onClick={onClick ? () => onClick() : undefined}
+        onClick={onClick ? onClick : undefined}
         borderRadius={0}
         px={5}
         fontSize={12}
@@ -40,7 +40,7 @@ const ButtonBrand: FC<{
       bg={'brand'}
       type={type}
       disabled={disabled}
-      onClick={onClick ? () => onClick() : undefined}
+      onClick={onClick ? onClick : undefined}
       borderRadius={0}
       px={5}
       color="background"
