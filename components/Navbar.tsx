@@ -35,7 +35,7 @@ const Navbar: FC = () => {
   }, [isAuth, onClose]);
 
   return (
-    <Box bg="#292d3688" pos="sticky" zIndex="sticky" h="12">
+    <Box bg="#292d36ee" pos="sticky" zIndex="sticky" top={0} h="12">
       <Container maxW="container.xl" h="full" px={{ base: 0, md: 4 }}>
         <Flex alignItems="center" justifyContent="space-between" h="full">
           <NextLink href="/" passHref>
@@ -64,7 +64,7 @@ const Navbar: FC = () => {
             <Flex alignItems="center" gap="10px">
               {cart}
               <Text fontSize={12}>MENU</Text>
-              <MobileMenu />
+              <MobileMenu onOpen={onOpen} />
             </Flex>
           )}
         </Flex>

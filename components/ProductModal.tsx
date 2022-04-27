@@ -46,9 +46,9 @@ const ProductModal: React.FC = () => {
       isCentered
     >
       <ModalOverlay />
-      <ModalContent pos="relative">
+      <ModalContent pos="relative" py={{ base: 0, md: 20 }}>
         {mobile ? (
-          <Box pos="absolute" h="50%" bg="darkGray" w="100%" top="0" left="0" />
+          <Box pos="absolute" h="55%" bg="darkGray" w="100%" top="0" left="0" />
         ) : (
           <Box
             pos="absolute"
@@ -60,13 +60,19 @@ const ProductModal: React.FC = () => {
           />
         )}
         <ModalHeader />
-        <ModalCloseButton />
+        {mobile ? (
+          <Flex>
+            <ButtonBrand onClick={productContext.onClose}>← BACK</ButtonBrand>
+          </Flex>
+        ) : (
+          <ModalCloseButton />
+        )}
         <ModalBody>
           <Flex
             direction={{ base: 'column-reverse', md: 'row' }}
             alignItems="center"
             justifyContent={{ base: 'space-between', md: undefined }}
-            h={{ base: '90vh', md: undefined }}
+            h={{ base: '90vh', md: 'inherit' }}
           >
             <Flex
               direction="column"
@@ -75,7 +81,7 @@ const ProductModal: React.FC = () => {
               flexBasis="60%"
               pos="relative"
             >
-              {sale && (
+              {sale && !mobile ? (
                 <Text
                   pos="absolute"
                   top="64px"
@@ -90,8 +96,19 @@ const ProductModal: React.FC = () => {
                 >
                   sale
                 </Text>
-              )}
+              ) : null}
               <VStack bg="darkGray" px="20" py="16" alignItems="flex-start">
+                {sale && mobile ? (
+                  <Text
+                    h="5"
+                    bg="brand"
+                    px="4"
+                    color="darkGray"
+                    lineHeight="1.2"
+                  >
+                    sale
+                  </Text>
+                ) : null}
                 <Heading>{title}</Heading>
                 <RatingShow rating={rating} />
                 <Text>Compound:</Text>

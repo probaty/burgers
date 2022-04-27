@@ -14,14 +14,14 @@ import React from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { useAuth } from '../hooks/useAuth';
 
-const ProfileMenu = () => {
+const ProfileMenu: React.FC = () => {
   const auth = getAuth();
   const handleLogout = () => {
     signOut(auth);
   };
   const { email } = useAuth();
   return (
-    <Menu>
+    <Menu autoSelect={false}>
       <MenuButton
         as={IconButton}
         icon={<Icon w="6" h="6" as={CgProfile} />}
@@ -34,42 +34,15 @@ const ProfileMenu = () => {
         _hover={{ bg: '#d9bc86' }}
       />
       <MenuList bg="darkGray" border="none">
-        <MenuItem
-          bgColor="darkGray"
-          _hover={{ backgroundColor: '#333345' }}
-          _active={{ backgroundColor: '#333345' }}
-          _focus={{
-            backgroundColor: '#333345',
-            boxShadow: 'none !important',
-          }}
-        >
-          {email}
-        </MenuItem>
+        <MenuItem bgColor="darkGray">{email}</MenuItem>
         <NextLink href="/orders" passHref>
           <Link>
-            <MenuItem
-              bgColor="darkGray"
-              _hover={{ backgroundColor: '#333345' }}
-              _active={{ backgroundColor: '#333345' }}
-              _focus={{
-                backgroundColor: '#333345',
-                boxShadow: 'none !important',
-              }}
-            >
-              Order history
-            </MenuItem>
+            <MenuItem bgColor="darkGray">Order history</MenuItem>
           </Link>
         </NextLink>
         <MenuDivider borderColor="#4a4a61" />
 
-        <MenuItem
-          onClick={() => handleLogout()}
-          _hover={{ backgroundColor: '#333345' }}
-          _active={{ backgroundColor: '#333345' }}
-          _focus={{ backgroundColor: '#333345', boxShadow: 'none !important' }}
-        >
-          LogOut
-        </MenuItem>
+        <MenuItem onClick={() => handleLogout()}>LogOut</MenuItem>
       </MenuList>
     </Menu>
   );
