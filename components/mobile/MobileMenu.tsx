@@ -51,7 +51,14 @@ const MobileMenu: React.FC<{ onOpen: () => void }> = ({ onOpen }) => {
         <MenuGroup title="My Account">
           {isAuth ? (
             <>
-              <MenuItem>{email}</MenuItem>
+              <MenuItem
+                _focus={{
+                  backgroundColor: '#333345',
+                  boxShadow: 'none !important',
+                }}
+              >
+                {email}
+              </MenuItem>
               <NextLink href="/orders" passHref>
                 <Link>
                   <MenuItem>Order history</MenuItem>

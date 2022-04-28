@@ -7,19 +7,19 @@ const RatingShow: FC<{ rating: number }> = ({ rating }) => {
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
       stars.push(
-        <Box px={1} py={0} key={i}>
+        <Box key={i}>
           <Icon as={AiFillStar} color="brand" key={i}></Icon>
         </Box>
       );
     } else {
       stars.push(
-        <Box px={1} py={0} key={i}>
+        <Box key={i}>
           <Icon as={AiOutlineStar} color="brand" key={i}></Icon>
         </Box>
       );
     }
   }
-  return <Flex>{stars}</Flex>;
+  return <HStack spacing={2}>{stars}</HStack>;
 };
 
 export default RatingShow;

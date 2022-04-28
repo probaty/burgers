@@ -34,7 +34,15 @@ const ProfileMenu: React.FC = () => {
         _hover={{ bg: '#d9bc86' }}
       />
       <MenuList bg="darkGray" border="none">
-        <MenuItem bgColor="darkGray">{email}</MenuItem>
+        <MenuItem
+          bgColor="darkGray"
+          _focus={{
+            backgroundColor: '#333345',
+            boxShadow: 'none !important',
+          }}
+        >
+          {email}
+        </MenuItem>
         <NextLink href="/orders" passHref>
           <Link>
             <MenuItem bgColor="darkGray">Order history</MenuItem>
