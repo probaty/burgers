@@ -7,33 +7,22 @@ import {
   Flex,
   Icon,
   HStack,
+  useToast,
 } from '@chakra-ui/react';
-import burgerImage from '../public/iamges/burger-1.png';
-import React, {
-  FC,
-  MouseEventHandler,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-// import { Context } from '../pages/_app';
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import React, { useContext } from 'react';
 import RatingShow from './RatingShow';
 import ButtonBrand from './ButtonBrand';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { Product } from '../types/product';
 import { useDispatch } from 'react-redux';
-import {
-  addToCart,
-  removeFormCart,
-  removeOneProductFromCart,
-} from '../store/slices/cartSlice';
-import { useTypedSelector } from '../hooks/useTypedSelector';
+import { addToCart } from '../store/slices/cartSlice';
 import { ProductContext } from './contexts/ProductProvider';
+import Toast from './Toast';
 
-const Card: FC<{ product: Product }> = ({ product }) => {
+const Card: React.FC<{ product: Product }> = ({ product }) => {
   const { imageUrl, title, rating, price, sale } = product;
   const productContext = useContext(ProductContext);
+  const toast = useToast();
 
   const dispatch = useDispatch();
   return (
@@ -93,6 +82,11 @@ const Card: FC<{ product: Product }> = ({ product }) => {
           onClick={(e) => {
             e.stopPropagation();
             dispatch(addToCart(product));
+            toast({
+              duration: 1500,
+              position: 'bottom-right',
+              render: () => <Toast text={`${product.title} added to cart`} />,
+            });
           }}
         >
           <HStack>

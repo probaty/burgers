@@ -4,9 +4,9 @@ import { useCart } from '../../hooks/useCart';
 import CartItems from '../CartItems';
 
 const Cart: React.FC = () => {
-  const { cart } = useCart();
+  const { isEmpty } = useCart();
 
-  if (cart.length === 0) {
+  if (isEmpty) {
     return (
       <Center minH="90vh">
         <Heading size="xl">Cart is empty</Heading>

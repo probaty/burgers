@@ -16,6 +16,7 @@ import {
   Icon,
   Flex,
   useBreakpointValue,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
@@ -23,11 +24,13 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/slices/cartSlice';
 import ButtonBrand from './ButtonBrand';
 import { ProductContext } from './contexts/ProductProvider';
+import Toast from './Toast';
 import RatingShow from './RatingShow';
 
 const ProductModal: React.FC = () => {
   const productContext = useContext(ProductContext);
   const dispatch = useDispatch();
+  const toast = useToast();
   const size = useBreakpointValue({ base: 'full', md: '5xl' });
   const mobile = useBreakpointValue({ base: true, md: false });
 
@@ -118,6 +121,13 @@ const ProductModal: React.FC = () => {
                 <ButtonBrand
                   onClick={() => {
                     dispatch(addToCart(product));
+                    toast({
+                      duration: 1500,
+                      position: 'bottom-right',
+                      render: () => (
+                        <Toast text={`${product.title} added to cart`} />
+                      ),
+                    });
                   }}
                 >
                   <Icon as={MdAddShoppingCart} fontSize="20"></Icon>
