@@ -1,5 +1,5 @@
+import React from 'react';
 import {
-  Box,
   Divider,
   Heading,
   HStack,
@@ -8,8 +8,8 @@ import {
   Text,
   IconButton,
   Icon,
+  Center,
 } from '@chakra-ui/react';
-import React from 'react';
 import { IoAdd, IoRemove, IoClose } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import {
@@ -17,35 +17,28 @@ import {
   CartState,
   removeFormCart,
   removeOneProductFromCart,
-} from '../store/slices/cartSlice';
-import RatingShow from './RatingShow';
+} from '../../store/slices/cartSlice';
+import RatingShow from '../RatingShow';
 
-const CartItem: React.FC<{ cartItem: CartState }> = ({ cartItem }) => {
+const MobileCartItem: React.FC<{ cartItem: CartState }> = ({ cartItem }) => {
   const { count, product } = cartItem;
   const dispatch = useDispatch();
   const { imageUrl, price, title, rating } = product;
   return (
-    <HStack>
-      <HStack flexBasis="80%">
-        <Box bg="brandGray" px="0.5" mt="4">
-          <Image mt="-4" w="100px" h="80px" src={imageUrl} alt={title} />
-        </Box>
+    <HStack bg="black" alignItems="stretch" h="90px">
+      <HStack flexBasis="50%">
+        <Center bg="brandGray" h="90px">
+          <Image maxW="20" src={imageUrl} alt={title} />
+        </Center>
         <VStack spacing="1" justifyContent="center" alignItems="flex-start">
-          <Heading size="md">{title}</Heading>
-          <RatingShow rating={rating} />
+          <Heading size="sm">{title}</Heading>
+          <RatingShow small rating={rating} />
         </VStack>
       </HStack>
 
-      <HStack justifyContent="space-between" w="full" pr="4">
+      <HStack justifyContent="flex-end" flexBasis="50%" pr="5" spacing="0">
         <Divider orientation="vertical" h="16" opacity="0.2" />
-        <VStack flexBasis="15%">
-          <Heading size="sm" opacity="0.5">
-            price
-          </Heading>
-          <Text fontSize="sm">{price} ₽</Text>
-        </VStack>
-        <Divider orientation="vertical" h="16" opacity="0.2" />
-        <VStack flexBasis="30%">
+        <VStack flexBasis="55%">
           <Heading size="sm" opacity="0.5">
             quantity
           </Heading>
@@ -63,7 +56,7 @@ const CartItem: React.FC<{ cartItem: CartState }> = ({ cartItem }) => {
               _hover={{ bg: 'darkGray' }}
               aria-label={'remove one'}
             />
-            <Text fontSize="sm">{count}</Text>
+            <Text fontSize="xs">{count}</Text>
             <IconButton
               onClick={() => {
                 dispatch(addToCart(product));
@@ -79,28 +72,28 @@ const CartItem: React.FC<{ cartItem: CartState }> = ({ cartItem }) => {
           </HStack>
         </VStack>
         <Divider orientation="vertical" h="16" opacity="0.2" />
-        <VStack flexBasis="20%">
+        <VStack flexBasis="45%">
           <Heading size="sm" opacity="0.5">
             total
           </Heading>
-          <Text fontSize="sm">{price * count} ₽</Text>
+          <Text fontSize="xs">{price * count} ₽</Text>
         </VStack>
-        <Divider orientation="vertical" h="16" opacity="0.2" />
         <IconButton
+          pos="absolute"
+          right="1"
           onClick={() => {
             dispatch(removeFormCart(product));
           }}
           size="sm"
           icon={<Icon as={IoClose} h="5" w="5" opacity="0.8" />}
           borderRadius="0"
-          bg="brandGray"
-          _active={{ bg: 'brand', color: 'darkGray' }}
-          _hover={{ bg: 'brand', color: 'darkGray' }}
-          aria-label={'remove one'}
+          bg="brand"
+          color="darkGray"
+          aria-label={'remove'}
         />
       </HStack>
     </HStack>
   );
 };
 
-export default React.memo(CartItem);
+export default MobileCartItem;

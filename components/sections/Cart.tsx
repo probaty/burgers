@@ -4,16 +4,6 @@ import { useCart } from '../../hooks/useCart';
 import CartItems from '../CartItems';
 
 const Cart: React.FC = () => {
-  const { isEmpty } = useCart();
-
-  if (isEmpty) {
-    return (
-      <Center minH="90vh">
-        <Heading size="xl">Cart is empty</Heading>
-      </Center>
-    );
-  }
-
   return (
     <Flex maxH="90vh" minH="90vh">
       <VStack alignItems="flex-start" flexBasis="60%" pt="10" pb="20">
