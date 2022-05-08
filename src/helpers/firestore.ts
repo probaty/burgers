@@ -5,7 +5,10 @@ import {
   where,
   limit,
   getDocs,
+  addDoc,
+  Timestamp,
 } from 'firebase/firestore';
+import { OrderProps } from '../types/order';
 import { Product } from '../types/product';
 
 const getSaleProducts = async (limitProd = 4) => {
@@ -34,4 +37,10 @@ const getProducts = async (limitProd = 8) => {
   return products;
 };
 
-export { getSaleProducts, getProducts };
+const storeOrder = async (order: OrderProps) => {
+  const db = getFirestore();
+  const ordersRef = collection(db, 'orders');
+  addDoc(ordersRef, { createdTime: Timestamp.now(), ...order });
+};
+
+export { getSaleProducts, getProducts, storeOrder };

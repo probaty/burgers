@@ -10,9 +10,10 @@ import { store } from '../store';
 import { Global } from '@emotion/react';
 
 const GlobalStyles = css({
-  'a:focus, button:focus': {
-    boxShadow: '0 0 0 3px #ffdea0bb !important',
-  },
+  'a:focus, button:focus, .chakra-radio__control[data-focus], .chakra-radio__control:focus ':
+    {
+      boxShadow: '0 0 0 3px #ffdea0bb !important',
+    },
 });
 
 function MyApp({ Component, pageProps }: AppProps) {

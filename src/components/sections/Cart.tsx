@@ -1,7 +1,7 @@
-import { Box, Center, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Flex, Heading, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { useCart } from '../../hooks/useCart';
 import CartItems from '../CartItems';
+import Payment from '../Payment';
 
 const Cart: React.FC = () => {
   return (
@@ -11,6 +11,8 @@ const Cart: React.FC = () => {
         <CartItems />
       </VStack>
       <VStack
+        spacing="6"
+        direction="column"
         alignItems="flex-start"
         flexBasis="40%"
         bg="darkGray"
@@ -18,6 +20,7 @@ const Cart: React.FC = () => {
         px="12"
       >
         <Heading>payment</Heading>
+        <Payment />
       </VStack>
     </Flex>
   );

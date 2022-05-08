@@ -23,8 +23,8 @@ const Card: React.FC<{ product: Product }> = ({ product }) => {
   const { imageUrl, title, rating, price, sale } = product;
   const productContext = useContext(ProductContext);
   const toast = useToast();
-
   const dispatch = useDispatch();
+
   return (
     <Box
       w={60}

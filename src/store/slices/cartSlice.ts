@@ -64,10 +64,18 @@ const cartSlice = createSlice({
       });
       state.totalCount = count;
     },
+    clearCart(state) {
+      state.cart = initialState.cart;
+      state.totalCount = initialState.totalCount;
+    },
   },
 });
 
-export const { removeFormCart, addToCart, removeOneProductFromCart } =
-  cartSlice.actions;
+export const {
+  clearCart,
+  removeFormCart,
+  addToCart,
+  removeOneProductFromCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

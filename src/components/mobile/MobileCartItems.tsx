@@ -1,7 +1,7 @@
-import { Divider, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+import { Divider, Heading, HStack, Text, VStack } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
 import { useCart } from '../../hooks/useCart';
-import CartItem from '../CartItem';
+import Payment from '../Payment';
 import MobileCartItem from './MobileCartItem';
 
 const MobileCartItems: React.FC = () => {
@@ -19,7 +19,8 @@ const MobileCartItems: React.FC = () => {
       pl="2"
       pr="5"
       pt="8"
-      alignItems="flex-start"
+      pb="10"
+      alignItems="center"
       h="full"
       w="full"
       spacing="7"
@@ -36,6 +37,7 @@ const MobileCartItems: React.FC = () => {
           {subTotal} ₽
         </Text>
       </HStack>
+      <Payment />
     </VStack>
   );
 };

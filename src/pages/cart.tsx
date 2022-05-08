@@ -6,7 +6,7 @@ import { useCart } from '../hooks/useCart';
 
 const Home: NextPage = () => {
   const { isEmpty } = useCart();
-  const mobile = useBreakpointValue({ base: true, md: true, lg: false });
+  const mobile = useBreakpointValue({ sm: true, lg: false });
 
   if (isEmpty) {
     return (
