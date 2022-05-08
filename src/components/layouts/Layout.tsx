@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAuthLoadToggle } from '../../hooks/useAuthLoadToggle';
+import { CartState, setCart } from '../../store/slices/cartSlice';
 import { removeUser, setUser } from '../../store/slices/userSlice';
 import Navbar from '../Navbar';
 
@@ -12,6 +13,14 @@ const Layout: FC = ({ children }) => {
   const loading = useAuthLoadToggle();
 
   useEffect(() => {
+    const cart = localStorage.getItem('cart');
+    if (cart) {
+      const cartJson = JSON.parse(cart) as {
+        cart: CartState[];
+        totalCount: number;
+      };
+      dispatch(setCart(cartJson));
+    }
     const subscription = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(

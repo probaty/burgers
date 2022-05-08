@@ -26,9 +26,11 @@ const cartSlice = createSlice({
           }
         });
         state.totalCount += 1;
+        localStorage.setItem('cart', JSON.stringify(state));
       } else {
         state.cart = [...state.cart, { product: action.payload, count: 1 }];
         state.totalCount += 1;
+        localStorage.setItem('cart', JSON.stringify(state));
       }
     },
     removeOneProductFromCart(state, action: PayloadAction<Product>) {
@@ -41,6 +43,7 @@ const cartSlice = createSlice({
             (item) => item.product.id !== action.payload.id
           );
           state.totalCount -= 1;
+          localStorage.setItem('cart', JSON.stringify(state));
           return;
         }
         state.cart = state.cart.map((item) => {
@@ -52,6 +55,7 @@ const cartSlice = createSlice({
           }
         });
         state.totalCount -= 1;
+        localStorage.setItem('cart', JSON.stringify(state));
       }
     },
     removeFormCart(state, action: PayloadAction<Product>) {
@@ -63,10 +67,19 @@ const cartSlice = createSlice({
         count += item.count;
       });
       state.totalCount = count;
+      localStorage.setItem('cart', JSON.stringify(state));
     },
     clearCart(state) {
       state.cart = initialState.cart;
       state.totalCount = initialState.totalCount;
+      localStorage.removeItem('cart');
+    },
+    setCart(
+      state,
+      action: PayloadAction<{ cart: CartState[]; totalCount: number }>
+    ) {
+      state.cart = action.payload.cart;
+      state.totalCount = action.payload.totalCount;
     },
   },
 });
@@ -76,6 +89,7 @@ export const {
   removeFormCart,
   addToCart,
   removeOneProductFromCart,
+  setCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
