@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import { CartState } from '../store/slices/cartSlice';
 
 export interface OrderProps {
@@ -10,3 +11,8 @@ export interface OrderProps {
   expDate?: number;
   cvv?: number;
 }
+
+export type OrderPropsWithId = OrderProps & {
+  id: string;
+  createdTime: Timestamp;
+};

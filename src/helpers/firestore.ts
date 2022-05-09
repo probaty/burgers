@@ -7,8 +7,9 @@ import {
   getDocs,
   addDoc,
   Timestamp,
+  orderBy,
 } from 'firebase/firestore';
-import { OrderProps } from '../types/order';
+import { OrderProps, OrderPropsWithId } from '../types/order';
 import { Product } from '../types/product';
 
 const getSaleProducts = async (limitProd = 4) => {
@@ -43,4 +44,21 @@ const storeOrder = async (order: OrderProps) => {
   addDoc(ordersRef, { createdTime: Timestamp.now(), ...order });
 };
 
-export { getSaleProducts, getProducts, storeOrder };
+const getOrderHistory = async (userId: string) => {
+  const orders: OrderPropsWithId[] = [];
+  const db = getFirestore();
+  const ordersRef = collection(db, 'orders');
+  const q = query(
+    ordersRef,
+    where('userId', '==', userId),
+    orderBy('createdTime', 'desc')
+  );
+  const ordersSnapshot = await getDocs(q);
+  ordersSnapshot.forEach((doc) => {
+    orders.push({ ...doc.data(), id: doc.id } as OrderPropsWithId);
+  });
+
+  return orders;
+};
+
+export { getSaleProducts, getProducts, storeOrder, getOrderHistory };
