@@ -35,17 +35,24 @@ const Payment: React.FC = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
+  const calcTotal = () => {
+    let total = 0;
+    cart.forEach((value) => {
+      total += value.product.price * value.count;
+    });
+    return total;
+  };
+
   const onSubmit = (data: OrderFormValues) => {
     if (id) {
-      const order = createOrder(id, cart, value, data);
+      const order = createOrder(id, cart, value, calcTotal(), data);
       storeOrder(order)
         .then((_) => onSuccess())
         .catch((_) => onError());
     } else {
       const auth = getAuth();
       signInAnonymously(auth).then(({ user }) => {
-        const order = createOrder(user.uid, cart, value, data);
-        console.log(order);
+        const order = createOrder(user.uid, cart, value, calcTotal(), data);
         storeOrder(order)
           .then((_) => {
             onSuccess();

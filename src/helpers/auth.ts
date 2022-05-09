@@ -26,7 +26,6 @@ const registerUserEmail = (
   loadOff: Function
 ) => {
   const auth = getAuth();
-  console.log(email, password);
 
   createUserWithEmailAndPassword(auth, email, password).catch((error) => {
     setError(error.message);

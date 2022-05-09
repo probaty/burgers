@@ -6,6 +6,7 @@ export const createOrder = (
   userId: string,
   cart: CartState[],
   payment: string,
+  totalPrice: number,
   { address, cardNumber, cvv, expDate }: OrderFormValues
 ): OrderProps => {
   if (payment === 'CASH ON DELIVERY') {
@@ -13,6 +14,7 @@ export const createOrder = (
       address,
       cart,
       userId,
+      totalPrice,
       paymentMethod: payment,
     };
   } else {
@@ -20,6 +22,7 @@ export const createOrder = (
       address,
       cart,
       userId,
+      totalPrice,
       paymentMethod: payment,
       cardNumber,
       cvv,

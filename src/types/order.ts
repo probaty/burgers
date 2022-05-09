@@ -5,6 +5,7 @@ export interface OrderProps {
   cart: CartState[];
   address: string;
   paymentMethod: string;
+  totalPrice: number;
   cardNumber?: number;
   expDate?: number;
   cvv?: number;

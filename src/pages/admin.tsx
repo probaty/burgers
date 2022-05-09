@@ -30,7 +30,6 @@ const Admin: NextPage = ({}) => {
   }) => {
     if (refInput.current?.files?.length) {
       setLoading.on;
-      console.log('start');
 
       const file = refInput.current.files[0];
       const storageRef = ref(storage, `/images/${file.name}`);
@@ -46,7 +45,6 @@ const Admin: NextPage = ({}) => {
         imageUrl: path,
       };
       const docRef = await addDoc(collection(db, 'products'), itemData);
-      console.log('complete', docRef.id);
       reset();
       setLoading.off;
     }
