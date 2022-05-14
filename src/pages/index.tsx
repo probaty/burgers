@@ -5,10 +5,9 @@ import Card from '../components/Card';
 import ProductProvider from '../components/contexts/ProductProvider';
 import ProductModal from '../components/ProductModal';
 import OurProducts from '../components/sections/OurProducts';
+import SaleSection from '../components/sections/SaleSection';
 import { getProducts, getSaleProducts } from '../helpers';
 import { Product } from '../types/product';
-
-const SaleSection = dynamic(() => import('../components/sections/SaleSection'));
 
 const Home: NextPage<{ saleProducts: Product[]; ourProducts: Product[] }> = ({
   saleProducts,

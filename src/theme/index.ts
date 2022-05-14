@@ -39,6 +39,25 @@ const theme = extendTheme({
         },
       },
     },
+    Button: {
+      variants: {
+        brand: {
+          bg: 'brand',
+          borderRadius: 0,
+          px: 5,
+          color: 'background',
+          _hover: { bg: '#d9bc86' },
+        },
+        brandDark: {
+          bg: 'brandGray',
+          borderRadius: 0,
+          px: 5,
+
+          _hover: { bg: 'blackAlpha.800' },
+          _active: { bg: 'blackAlpha.800' },
+        },
+      },
+    },
   },
   styles: {
     global: () => ({

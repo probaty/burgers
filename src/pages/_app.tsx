@@ -15,10 +15,9 @@ const GlobalStyles = css({
       boxShadow: '0 0 0 3px #ffdea0bb !important',
     },
 });
+initializeApp(firebaseConfig);
 
 function MyApp({ Component, pageProps }: AppProps) {
-  initializeApp(firebaseConfig);
-
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
